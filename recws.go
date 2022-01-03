@@ -46,6 +46,8 @@ type RecConn struct {
 	KeepAliveTimeout time.Duration
 	// NonVerbose suppress connecting/reconnecting messages.
 	NonVerbose bool
+	// HardDisconnect forces the lower level connect go routine to stop, handles non standard/forced disconnections
+	HardDisconnect bool
 
 	isConnected bool
 	mu          sync.RWMutex
@@ -421,7 +423,7 @@ func (rc *RecConn) connect() {
 	b := rc.getBackoff()
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	for {
+	for !rc.HardDisconnect {
 		nextItvl := b.Duration()
 		wsConn, httpResp, err := rc.dialer.Dial(rc.url, rc.reqHeader)
 
