@@ -12,7 +12,7 @@ Reconnecting WebSocket is a websocket client based on [gorilla/websocket](https:
 ## Installation
 
 ```bash
-go get github.com/recws-org/recws
+go get github.com/knexguy101/recws
 ```
 
 ## Sponsors
